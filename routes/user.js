@@ -24,12 +24,15 @@ const setUpRoutes = (express) => {
                     message: 'Username already used'
                 });
             }
+
             const hash = await bcrypt.hash(data.password, 5);
             data.password = hash;
+
             await userService.createUser(data);
             return res.status(200).json({
                 message: 'hi you signed up, Ithink'
             });
+            
         } catch(err) {
             console.log(err);
             return res.status(401).json({
