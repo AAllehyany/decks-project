@@ -5,7 +5,9 @@ const knex = require('./database');
 const app = express();
 const userRoutes = require('./routes/user');
 const weissTitleRoutes = require('./routes/weiss_titles');
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/users', userRoutes(express));
