@@ -14,7 +14,7 @@ exports.up = function(knex) {
         table.integer('user_id').unsigned();
         table.foreign('title_id').references('weiss_titles.id');
         table.foreign('user_id').references('users.id');
-        table.timestamps();
+        table.timestamps(false, true);
     })
 };
 
