@@ -1,6 +1,6 @@
 import Router from '@koa/router';
 import knex from 'knex';
-import {searchCardsService} from '../services/weiss-card.service';
+import {searchCardsService, SearchSchema} from '../services/weiss-card.service';
 import {searchQuerySchema} from '../schemas/weiss-card.schema';
 
 const setUpRoutes = (db: knex): Router =>  {
@@ -9,8 +9,9 @@ const setUpRoutes = (db: knex): Router =>  {
     });
     
     router.get('/', async (ctx) => {
-        
-        const result = await searchCardsService(db, {});
+        const searchQuery = ctx.query;
+        console.log(searchQuery);
+        const result = await searchCardsService(db, (searchQuery as SearchSchema));
         ctx.body = result;
         ctx.status = 200;
     });
