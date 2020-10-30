@@ -17,11 +17,12 @@ const addManyService = async (cards, user_id, title_id) => {
 
 }
 
-const searchCardsService = (searchQuery) => {
-
+const searchCardsService = async (searchQuery) => {
+    return knex.select().table(tableName);
 };
 
 module.exports = {
     addCardService,
     addManyService,
+    searchCardsService,
 }
