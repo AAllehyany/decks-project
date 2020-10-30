@@ -5,11 +5,14 @@ const createCardSchmea = Joi.object({
     name: Joi.string().required(),
     card_type: Joi.number().min(0).max(2).required(),
     color: Joi.number().min(1).max(4).required(),
-    soul: Joi.required().number().min(-1),
-    cost: Joi.required().number().min(-1),
-    level: Joi.required().number().min(-1),
-    power: Joi.required().number().min(-1),
+    soul: Joi.number().required().min(-1),
+    cost: Joi.number().required().min(-1),
+    level: Joi.number().required().min(-1),
+    power: Joi.number().required().min(-1),
     text: Joi.string().default(''),
+    traits: Joi.string().default('').allow(null, ''),
+    set_code: Joi.string().default(''),
+    rarity: Joi.string().default(''),
 });
 
 const searchQuerySchema = Joi.object({
@@ -24,7 +27,7 @@ const searchQuerySchema = Joi.object({
     min_power: Joi.number().min(-1),
     max_power: Joi.number().min(-1),
     text: Joi.string(),
-})
+});
 
 
 module.exports = {
