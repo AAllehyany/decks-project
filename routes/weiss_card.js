@@ -1,5 +1,8 @@
 const weissCardService = require('../services/weiss_card.service')
 const weissCardSchema = require('../models/weiss_card.schema');
+const authMiddleware = require('./auth');
+const Joi = require('joi');
+
 module.exports = (express) => {
 
     const router = express.Router();
@@ -17,9 +20,18 @@ module.exports = (express) => {
     })
 
     //TODO: Add passport authentication and restrict access
-    router.post('/', async(req, res) => {
+    router.post('/', authMiddleware.adminAuthMiddleware, async(req, res) => {
         try {
-            
+            const data = req.body;
+            const cardList = Joi.array().items(weissCardSchema.createCardSchmea);
+            await cardList.validateAsync(data);
+
+            data.forEach(c => {
+                delete c.rarity;
+            });
+
+            await weissCardService.addManyService(data, req.token.user_id, 2);
+            res.sendStatus(200);
 
         } catch(err) {
             console.log(err)

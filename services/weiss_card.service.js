@@ -10,7 +10,7 @@ const addCardService = async (card, user_id, title_id) => {
 const addManyService = async (cards, user_id, title_id) => {
     cards.forEach(c => {
         c.user_id = user_id;
-        c.title_id = title_id;
+        c.title_id = 1;
     });
 
     return knex(tableName).insert(cards);
