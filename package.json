@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@koa/router": "^9.4.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -17,9 +18,21 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.8",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-json": "^2.0.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pg": "^8.4.2",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "ts-node": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/knex": "^0.16.1",
+    "@types/koa": "^2.11.6",
+    "@types/koa__router": "^8.0.3",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-json": "^2.0.18"
   }
 }
