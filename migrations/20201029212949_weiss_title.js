@@ -10,6 +10,7 @@ exports.up = function(knex) {
         table.integer('cost');
         table.integer('level');
         table.integer('power');
+        table.text('text');
         table.integer('title_id').unsigned();
         table.integer('user_id').unsigned();
         table.foreign('title_id').references('weiss_titles.id');
