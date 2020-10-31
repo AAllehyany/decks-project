@@ -1,7 +1,8 @@
 import Router from '@koa/router';
 import knex from 'knex';
 import koajwt from 'koa-jwt';
-import {searchCardsService, SearchSchema} from '../services/weiss-card.service';
+import Joi from 'joi';
+import {searchCardsService, SearchSchema, addManyService} from '../services/weiss-card.service';
 import {searchQuerySchema, createCardSchema} from '../schemas/weiss-card.schema';
 
 const setUpRoutes = (db: knex): Router =>  {
@@ -21,7 +22,13 @@ const setUpRoutes = (db: knex): Router =>  {
 
     router.post('/create', async ctx => {
         const cards = ctx.request.body;
-        
+        const cardList = Joi.array().items(createCardSchema);
+        await cardList.validateAsync(cards);
+        const added = await addManyService(db, cards, ctx.state.user.user_id);
+        ctx.status = 200;
+        ctx.body = {
+            added
+        }
     });
 
 

@@ -1,5 +1,6 @@
 import Koa from 'koa';
 import Router from '@koa/router';
+import cors from '@koa/cors';
 import bodyparser from 'koa-bodyparser';
 import json from 'koa-json';
 import db from './database';
@@ -14,7 +15,7 @@ const weissCardRoutes = cardRoutes(db);
 const usersRoutes = userRoutes(db);
 const tokenRoute = tokenRoutes(db);
 
-
+app.use(cors());
 app.use(json());
 app.use(bodyparser());
 
