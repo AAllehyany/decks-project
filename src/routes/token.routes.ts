@@ -14,14 +14,10 @@ const setupRoutes = (db: knex) => {
         await authenticationSchema.validateAsync(data);
 
         const user = await userService.getByUsername(db, data.username);
-
-        if(user.length == 0) {
-            ctx.throw(401)
-        }
-
         const passwordValid = await bcrypt.compare(data.password, user[0].password);
-        if(!passwordValid) {
-            ctx.throw(401);
+
+        if(user.length == 0 || !passwordValid) {
+            ctx.throw(401, 'username or password incorrect');
         }
 
         const accessToken = await tokenService.provideBotToken();
