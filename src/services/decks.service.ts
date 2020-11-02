@@ -16,3 +16,7 @@ export const saveDeckService = async (deckList: DeckListInput) => {
 export const findByCode = async (code: string) => {
     return DeckList.findOne({code});
 }
+
+export const findListByCode = async (code: string) => {
+    return DeckList.findOne({code}).select('cards').populate('cards').exec();
+}

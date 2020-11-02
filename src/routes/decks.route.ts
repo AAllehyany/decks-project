@@ -22,7 +22,7 @@ router.post('/save', async ctx => {
     if(!valid) {
         throw new Error('invalid deck sent');
     }
-    
+
     const result = await deckService.saveDeckService(deck);
     ctx.body = {
         code
@@ -32,7 +32,10 @@ router.post('/save', async ctx => {
 
 router.get('/view/:code', async ctx => {
     const code = ctx.params.code;
-    const deck = await deckService.findByCode(code);
+    const deck = await deckService.findListByCode(code);
+    if(deck == null) {
+        ctx.throw(404, 'No such deck');
+    }
     ctx.body = deck;
 });
 
