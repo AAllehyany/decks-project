@@ -1,6 +1,6 @@
-import knex from 'knex';
-const tableName = 'weiss_cards';
+import { Mongoose } from 'mongoose';
 import {Card} from '../schemas/card_schema';
+import {Document} from 'mongoose';
 
 export const addCardService = async ( card: any, user_id: number, title_id: number) => {
     const newCard = new Card(card);
@@ -33,3 +33,17 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
     const power = {};
     return Card.find(query);
 };
+
+export const fetchCards = async (cardIds: Array<string>) => {
+    const list = [] as any;
+
+    for(const cardId of cardIds) {
+        const card = await Card.findById(cardId).exec();
+        if(card == null) {
+            throw Error('No such card found');
+        }
+        list.push(card);
+    }
+
+    return list;
+}

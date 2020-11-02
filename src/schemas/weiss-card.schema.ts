@@ -1,5 +1,20 @@
 import Joi from 'joi';
 
+
+export interface WeissCard {
+    name: string,
+    card_type: number,
+    color: number,
+    soul: number,
+    cost: number,
+    level: number,
+    power: number,
+    text: string,
+    traits: string,
+    set_code: string,
+    game: string
+}
+
 export const weissCardSchema = Joi.object({
     name: Joi.string().required(),
     card_type: Joi.number().min(0).max(2).required(),
