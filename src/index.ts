@@ -8,7 +8,7 @@ import tokenRoutes from './routes/token.routes';
 import deckRoutes from './routes/decks.route';
 import {ValidationError} from 'joi';
 
-import mongoose from 'mongoose';
+import mongoose, {CastError} from 'mongoose';
 
 
 
@@ -30,13 +30,19 @@ app.use(async (ctx, next) => {
         if(e instanceof ValidationError) {
             ctx.status = 400;
             ctx.body = {
-                error: e.message
+                message: `Received invalid input. ${e.details[0].message}`
             }
-        } else {
-            ctx.status = e.status || 500;
+        } 
+        
+        else if(e.name ===  'CastError') {
+            ctx.status = 400;
             ctx.body = {
-                message: e.message,
+                message: `Invalid value for ${e.path}: ${e.value}`
             }
+        } 
+
+        else {
+            ctx.status = e.status || 500;
             ctx.app.emit('eor', e, ctx);
         }
         console.log(e);
