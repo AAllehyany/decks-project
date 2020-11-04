@@ -28,10 +28,13 @@ export interface SearchSchema {
     game?: string,
 }
 
+export interface SearchQuery {
+    [key: string]: number | string | SearchQuery
+}
 
 export const searchCardsService = async ( searchQuery: SearchSchema) => {
     const query = {
-        "$and": [] as Array<any>,
+        "$and": [] as Array<SearchQuery>,
     };
     const cost = {"$and": [] as Array<any>};
     const level = {};
@@ -82,7 +85,7 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
         query["$and"].push({"power": {"$lte": searchQuery.max_power}})
     }
 
-    return Card.find(query);
+    return Card.find(query["$and"].length > 0 ? query : {});
 };
 
 export const fetchCards = async (cardIds: Array<string>) => {
