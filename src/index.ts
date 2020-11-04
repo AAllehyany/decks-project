@@ -28,7 +28,7 @@ app.use(async (ctx, next) => {
       await next();
     } catch (e) {
         if(e instanceof ValidationError) {
-            ctx.status = 401;
+            ctx.status = 400;
             ctx.body = {
                 error: e.message
             }
@@ -39,9 +39,20 @@ app.use(async (ctx, next) => {
             }
             ctx.app.emit('eor', e, ctx);
         }
-        
+        console.log(e);
     }
-  });
+});
+
+app.on('error', (err, ctx) => {
+    /* centralized error handling:
+     *   console.log error
+     *   write error to log file
+     *   save error and request information to database if ctx.request match condition
+     *   ...
+    */
+
+    console.log(err);
+});
 
 
 app.use(weissCardRoutes.routes()).use(weissCardRoutes.allowedMethods());
