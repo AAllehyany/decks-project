@@ -15,6 +15,7 @@
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "escape-string-regexp": "^1.0.5",
     "express": "^4.17.1",
     "hashids": "^2.2.1",
     "joi": "^17.3.0",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/dotenv": "^8.2.0",
+    "@types/escape-string-regexp": "^2.0.1",
     "@types/hashids": "^1.0.32",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/knex": "^0.16.1",
