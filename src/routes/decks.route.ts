@@ -34,7 +34,7 @@ router.get('/view/:code', async ctx => {
     const code = ctx.params.code;
     const deck = await deckService.findListByCode(code);
     if(deck == null) {
-        ctx.throw(404, 'No such deck');
+        ctx.throw(404, 'Could not find deck');
     }
     ctx.body = deck;
 });
