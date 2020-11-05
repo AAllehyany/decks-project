@@ -37,12 +37,9 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
     const query = {
         "$and": [] as Array<SearchQuery>
     };
-    const cost = {"$and": [] as Array<any>};
-    const level = {};
-    const power = {};
+
 
     if(searchQuery.name) {
-        //const escaped = EscapeRegex(`${searchQuery.name}`);
         query["$and"].push({"name": {"$regex": esr(searchQuery.name), $options: 'i'}});
     }
 
