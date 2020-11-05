@@ -11,6 +11,11 @@ export const cardSchema = new mongoose.Schema({
         required: true,
 
     },
+    image_url: {
+        type: String,
+        required: true,
+
+    },
     card_type: {
         type: Number,
         required: true,
