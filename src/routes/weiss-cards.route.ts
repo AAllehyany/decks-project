@@ -14,7 +14,6 @@ const setUpRoutes = (): Router =>  {
     
     router.get('/', async (ctx) => {
         const searchQuery = ctx.query;
-        console.log(searchQuery);
         const result = await searchCardsService((searchQuery as SearchSchema));
         ctx.body = result;
         ctx.status = 200;
