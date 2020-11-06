@@ -37,6 +37,7 @@ export const cardSchema = new mongoose.Schema({
     rarity: String,
     grade: Number,
     clan: String,
+    triggers: [String],
 });
 
 export const Card = mongoose.model('Card', cardSchema);
