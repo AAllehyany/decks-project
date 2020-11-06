@@ -1,6 +1,5 @@
-import { Mongoose } from 'mongoose';
 import {Card} from '../schemas/card_schema';
-import {Document} from 'mongoose';
+import { SearchSchema } from '../schemas/search-schema';
 
 const esr = require('escape-string-regexp');
 
@@ -13,21 +12,6 @@ export const addCardsMany = async ( cards: Array<any>, user_id: string) => {
     Card.insertMany(cards);
 }
 
-export interface SearchSchema {
-    name?: string,
-    card_type?: number,
-    color?: number,
-    soul?: number,
-    min_cost?: number,
-    max_cost?: number,
-    min_level?: number,
-    max_level?: number,
-    min_power?: number,
-    max_power?: number,
-    level_limit?: number,
-    game?: string,
-    skip?: number
-}
 
 export interface SearchQuery {
     [key: string]: number | string | SearchQuery
