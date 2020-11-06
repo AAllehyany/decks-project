@@ -1,3 +1,10 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({
+    path: path.resolve(__dirname, '../.env')
+});
+
 import Koa from 'koa';
 import Router from '@koa/router';
 import cors from '@koa/cors';
@@ -7,17 +14,15 @@ import cardRoutes from './routes/weiss-cards.route';
 import tokenRoutes from './routes/token.routes';
 import deckRoutes from './routes/decks.route';
 import {ValidationError} from 'joi';
-
 import mongoose, {CastError} from 'mongoose';
-
 
 
 const app = new Koa();
 const weissCardRoutes = cardRoutes();
 const tokenRoute = tokenRoutes();
 
-
-mongoose.connect('mongodb://localhost:27017/decks');
+console.log(<string>process.env.THING);
+mongoose.connect(<string>process.env.MONGO_URL);
 
 app.use(cors());
 app.use(json());
