@@ -12,7 +12,8 @@ export interface WeissCard {
     text: string,
     traits: string,
     set_code: string,
-    game: string
+    game: string,
+    triggers: Array<string>
 }
 
 export const weissCardSchema = Joi.object({
@@ -26,7 +27,8 @@ export const weissCardSchema = Joi.object({
     text: Joi.string().default(''),
     traits: Joi.string().default('').allow(null, ''),
     set_code: Joi.string().default(''),
-    game: Joi.string().required().valid('WS')
+    game: Joi.string().required().valid('WS'),
+    triggers: Joi.array().items(Joi.string())
 }).unknown(true);
 
 export const searchQuerySchema = Joi.object({
