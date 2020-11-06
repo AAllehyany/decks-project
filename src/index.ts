@@ -14,7 +14,8 @@ import cardRoutes from './routes/cards.route';
 import tokenRoutes from './routes/token.routes';
 import deckRoutes from './routes/decks.route';
 import {ValidationError} from 'joi';
-import mongoose, {CastError} from 'mongoose';
+import mongoose from 'mongoose';
+import adminRoute from './routes/admin.route';
 
 
 const app = new Koa();
@@ -68,6 +69,7 @@ app.on('error', (err, ctx) => {
 app.use(weissCardRoutes.routes()).use(weissCardRoutes.allowedMethods());
 app.use(tokenRoute.routes()).use(tokenRoute.allowedMethods());
 app.use(deckRoutes.routes()).use(deckRoutes.allowedMethods());
+app.use(adminRoute.routes()).use(adminRoute.allowedMethods());
 app.listen(3000, () => {
     console.log("Running.....");
 })
