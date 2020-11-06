@@ -21,7 +21,6 @@ const app = new Koa();
 const weissCardRoutes = cardRoutes();
 const tokenRoute = tokenRoutes();
 
-console.log(<string>process.env.THING);
 mongoose.connect(<string>process.env.MONGO_URL);
 
 app.use(cors());
