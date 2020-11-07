@@ -11,5 +11,6 @@ export interface SearchSchema {
     max_power?: number,
     level_limit?: number,
     game?: string,
-    skip?: number
+    skip?: number,
+    limit?: number
 }
