@@ -16,9 +16,9 @@ WORKDIR /usr/src/app
 COPY package.json .
 RUN npm install --production
 
-COPY --from=build /usr/src/app/dist dist
-#COPY serviceAccountKey.json ./
+COPY --from=build /usr/src/app/dist .
+RUN npm i -g pm2
 
 EXPOSE 3000
 
-CMD ["npm", "run", "serve"]
+CMD ["pm2-runtime", "index.js"]
