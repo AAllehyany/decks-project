@@ -16,7 +16,7 @@ import deckRoutes from './routes/decks.route';
 import {ValidationError} from 'joi';
 import mongoose from 'mongoose';
 import adminRoute from './routes/admin.route';
-
+import logger from 'koa-logger';
 
 const app = new Koa();
 const weissCardRoutes = cardRoutes();
@@ -24,6 +24,7 @@ const tokenRoute = tokenRoutes();
 
 mongoose.connect(<string>process.env.MONGO_URL);
 
+app.use(logger())
 app.use(cors());
 app.use(json());
 app.use(bodyparser());

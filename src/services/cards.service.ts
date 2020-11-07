@@ -22,8 +22,6 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
         "$and": [] as Array<SearchQuery>
     };
 
-    console.log(searchQuery);
-
 
     if(searchQuery.name) {
         query["$and"].push({"name": {"$regex": esr(searchQuery.name), $options: 'i'}});
@@ -68,11 +66,13 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
     if(searchQuery.max_power) {
         query["$and"].push({"power": {"$lte": searchQuery.max_power}})
     }
+
     const options = {limit: 12, skip: 0};
 
     if(searchQuery.skip) {
         options.skip = Number(searchQuery.skip);
     }
+    
     return Card.find(query["$and"].length > 0 ? query : {}, null, options).exec();
 };
 
