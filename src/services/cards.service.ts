@@ -17,6 +17,11 @@ export interface SearchQuery {
     [key: string]: number | string | SearchQuery
 }
 
+interface QueryOptions {
+    limit?: number
+    skip?: number
+}
+
 export const searchCardsService = async ( searchQuery: SearchSchema) => {
     const query = {
         "$and": [] as Array<SearchQuery>
@@ -67,12 +72,16 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
         query["$and"].push({"power": {"$lte": searchQuery.max_power}})
     }
 
-    const options = {limit: 12, skip: 0};
+    const options = {} as QueryOptions;
 
     if(searchQuery.skip) {
         options.skip = Number(searchQuery.skip);
     }
-    
+
+    if(searchQuery.limit) {
+        options.limit = Number(searchQuery.limit)
+    }
+
     return Card.find(query["$and"].length > 0 ? query : {}, null, options).exec();
 };
 
