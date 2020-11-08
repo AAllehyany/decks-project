@@ -7,10 +7,14 @@ const middleWare = async (ctx: ParameterizedContext<DefaultState, DefaultContext
     const auth = ctx.req.headers.authorization;
     if(!auth) ctx.throw(401, 'Unauthorized');
 
-    const token = auth.replace('Bearer', '').trim();
-    const decoded = await admin.auth().verifyIdToken(token);
-    ctx.state.user = decoded;
-    next();
+    try {
+        const token = auth.replace('Bearer', '').trim();
+        const decoded = await admin.auth().verifyIdToken(token);
+        ctx.state.user = decoded;
+        next();
+    } catch(err) {
+        ctx.throw(401, err)
+    }
     
 
 }
