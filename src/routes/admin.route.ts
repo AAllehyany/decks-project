@@ -4,6 +4,9 @@ import {addCardsMany} from '../services/cards.service';
 import {weissCardSchema} from '../schemas/weiss-card.schema';
 import firebaseAuth from '../middlewares/firebase-auth';
 
+import {ICreateGameInput, createGameSchema} from '../schemas/game_schema';
+import {createGame} from '../services/game.service';
+
 const router = new Router({
     prefix: '/admin',
 });
@@ -19,7 +22,17 @@ router.post('/card/create', async ctx => {
     ctx.body = {
         added
     }
-    });
+});
+
+router.post('/game/create', async ctx => {
+    const game: ICreateGameInput = ctx.request.body;
+    await createGameSchema.validateAsync(game);
+    const added = await createGame(game);
+    ctx.status = 200;
+    ctx.body = {
+        added
+    }
+});
 
 
 export default router;
