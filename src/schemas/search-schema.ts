@@ -10,7 +10,7 @@ export interface SearchSchema {
     min_power?: number,
     max_power?: number,
     level_limit?: number,
-    game?: string,
+    game: string,
     skip?: number,
     limit?: number
 }
