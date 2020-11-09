@@ -2,7 +2,7 @@ import * as deckService from '../services/decks.service';
 import {createDeckSchema} from '../schemas/deck_schema';
 import {generateUniqueCode} from '../services/code-generation.service';
 import {fetchCards} from '../services/cards.service';
-import {validateWeissDeck} from '../services/deck-validation.service';
+import {validateWeissDeck, weissRules, validateWithRule} from '../services/deck-validation.service';
 
 
 import Router from '@koa/router';
@@ -18,9 +18,9 @@ router.post('/save', async ctx => {
     deck.code = code;
     await createDeckSchema.validateAsync(deck);
     const deckList = await fetchCards(deck.cards);
-    const valid = validateWeissDeck(deckList as WeissCard[]);
+    const valid = validateWithRule(deckList as WeissCard[], weissRules);
     if(!valid) {
-        throw new Error('invalid deck sent');
+        ctx.throw(400, 'invalid deck sent');
     }
 
     const result = await deckService.saveDeckService(deck);
