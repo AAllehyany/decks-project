@@ -18,5 +18,5 @@ export const findByCode = async (code: string) => {
 }
 
 export const findListByCode = async (code: string) => {
-    return DeckList.findOne({code}).select('cards').populate('cards').exec();
+    return DeckList.findOne({code}).populate('cards').exec();
 }
