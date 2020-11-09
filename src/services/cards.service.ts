@@ -18,8 +18,8 @@ export interface SearchQuery {
 }
 
 interface QueryOptions {
-    limit?: number
-    skip?: number
+    limit: number
+    skip: number
 }
 
 export const searchCardsService = async ( searchQuery: SearchSchema) => {
@@ -27,7 +27,7 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
         "$and": [] as Array<SearchQuery>
     };
 
-    const perPage = 12;
+    const perPage = 50;
 
 
     if(searchQuery.name) {
@@ -82,7 +82,7 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
 
     options.limit = 50;
 
-    return Card.find(query["$and"].length > 0 ? query : {}, null, options).exec();
+    return Card.find(query["$and"].length > 0 ? query : {}).skip(options.skip).limit(options.limit).exec();
 };
 
 export const fetchCards = async (cardIds: Array<string>) => {
