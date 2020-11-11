@@ -27,6 +27,8 @@ services:
     depends_on: 
       - mongodb
     restart: unless-stopped
+    ports:
+      - 3000:3000
   mongodb:
     image: mongo:latest
     ports:
