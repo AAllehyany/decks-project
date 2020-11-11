@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(decks-builder.com www.decks-builder.com)
+domains=(decks-builder.com)
 rsa_key_size=4096
 data_path="./proxy/certbot"
 email="aallehyany@gmail.com" # Adding a valid address is strongly recommended
