@@ -29,28 +29,23 @@ services:
     ports:
       - 80:80
       - 443:443
-    networks: 
-      - decks-network
+
   backend:
     image: decks_backend
     build: .
-    networks:
-      - decks-network
+
     depends_on: 
       - mongodb
     ports:
       - 5000:3000
+
   mongodb:
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
       - data:/data/db
-    networks:
-      - decks-network
+
     
 volumes:
   data:
-
-networks:
-  decks-network:
