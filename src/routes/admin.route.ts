@@ -6,6 +6,8 @@ import firebaseAuth from '../middlewares/firebase-auth';
 
 import {ICreateGameInput, createGameSchema} from '../schemas/game_schema';
 import {createGame} from '../services/game.service';
+import { createExpansionSchema, ICreateExpansionInput } from '../schemas/expansion_schema';
+import { createExpansion } from '../services/expansion.service';
 
 const router = new Router({
     prefix: '/admin',
@@ -34,5 +36,13 @@ router.post('/game/create', async ctx => {
     }
 });
 
-
+router.post('/title/create', async ctx => {
+    const title: ICreateExpansionInput = ctx.request.body;
+    await createExpansionSchema.validateAsync(title);
+    const added = await createExpansion(title);
+    ctx.status = 200;
+    ctx.body = {
+        added
+    }
+})
 export default router;
