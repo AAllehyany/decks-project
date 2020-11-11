@@ -31,17 +31,25 @@ services:
   #   depends_on:
   #     - decks-backend
 
+  reverse-proxy:
+    image: nginx:1.19.4-alpine
+    container_name: reverse_proxy_server_container
+    depends_on:
+      - decks-backend
+    ports: 
+      - 80:80
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf
   decks-backend:
     image: decks_backend
     build: .
-
+    container_name: decks-container
     depends_on: 
       - mongodb
-    expose: 
-      - 3000
 
   mongodb:
     image: mongo:latest
+    container_name: mongodb-container
     ports:
       - 27017:27017
     volumes:
