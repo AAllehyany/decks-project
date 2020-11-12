@@ -49,9 +49,11 @@ app.use(async (ctx, next) => {
 
         else {
             ctx.status = e.status || 500;
-            ctx.app.emit('eor', e, ctx);
+            ctx.body = {
+                message: e.message || 'Server error'
+            }
+            ctx.app.emit('error', e, ctx);
         }
-        console.log(e);
     }
 });
 

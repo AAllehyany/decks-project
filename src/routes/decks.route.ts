@@ -15,19 +15,19 @@ const router = new Router({
 router.post('/save', async ctx => {
 
     const deck: ICreateDeckInput = ctx.request.body;
-   
+    
 
     await createDeckSchema.validateAsync(deck);
-    
-    const code = await generateUniqueCode();
-    deck.code = code;
 
     const deckList = await fetchCards(deck.cards);
     const valid = validateWithRule(deckList as WeissCard[], weissRules);
 
     if(!valid) {
-        ctx.throw(400, 'The deck does not follow proper deck construction rules!');
+        ctx.throw(400, 'The deck does not follow deck construction rules.');
     }
+
+    const code = await generateUniqueCode();
+    deck.code = code;
 
     await deckService.saveDeckService(deck);
     ctx.body = {

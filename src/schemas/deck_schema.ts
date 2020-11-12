@@ -4,7 +4,7 @@ import Joi from 'joi';
 export const createDeckSchema = Joi.object({
     name: Joi.string().required(),
     game: Joi.string().required().valid('WS', 'FoW', 'YGO', 'VG'),
-    code: Joi.string().required(),
+    //code: Joi.string().required(),
     cards: Joi.array().required(),
 });
 
@@ -17,6 +17,10 @@ export interface ICreateDeckInput {
 
 export const deckSchema = new mongoose.Schema({
     name: {
+        type: String,
+        required: true,
+    },
+    code: {
         type: String,
         required: true,
     },
