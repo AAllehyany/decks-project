@@ -1,5 +1,5 @@
 import * as deckService from '../services/decks.service';
-import {createDeckSchema} from '../schemas/deck_schema';
+import {createDeckSchema, ICreateDeckInput} from '../schemas/deck_schema';
 import {generateUniqueCode} from '../services/code-generation.service';
 import {fetchCards} from '../services/cards.service';
 import {weissRules, validateWithRule} from '../services/deck-validation.service';
@@ -14,17 +14,19 @@ const router = new Router({
 
 router.post('/save', async ctx => {
 
-    const deck = ctx.request.body;
-    const code = await generateUniqueCode();
-    deck.code = code;
+    const deck: ICreateDeckInput = ctx.request.body;
+   
 
     await createDeckSchema.validateAsync(deck);
+    
+    const code = await generateUniqueCode();
+    deck.code = code;
 
     const deckList = await fetchCards(deck.cards);
     const valid = validateWithRule(deckList as WeissCard[], weissRules);
 
     if(!valid) {
-        ctx.throw(400, 'invalid deck sent');
+        ctx.throw(400, 'The deck does not follow proper deck construction rules!');
     }
 
     await deckService.saveDeckService(deck);

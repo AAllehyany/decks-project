@@ -1,13 +1,7 @@
-import {DeckList} from '../schemas/deck_schema';
+import {DeckList, ICreateDeckInput} from '../schemas/deck_schema';
 
-export interface DeckListInput {
-    name: string,
-    code: string,
-    game: string,
-    cards: Array<any>
-}
 
-export const saveDeckService = async (deckList: DeckListInput) => {
+export const saveDeckService = async (deckList: ICreateDeckInput) => {
 
     const newDeck = new DeckList(deckList);
     return newDeck.save();

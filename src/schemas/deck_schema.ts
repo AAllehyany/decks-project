@@ -8,12 +8,15 @@ export const createDeckSchema = Joi.object({
     cards: Joi.array().required(),
 });
 
+export interface ICreateDeckInput {
+    name: string,
+    game: string,
+    cards: Array<any>,
+    code?: string
+}
+
 export const deckSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true,
-    },
-    code: {
         type: String,
         required: true,
     },
