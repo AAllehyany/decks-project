@@ -22,7 +22,7 @@ const app = new Koa();
 const weissCardRoutes = cardRoutes();
 const tokenRoute = tokenRoutes();
 
-mongoose.connect("mongodb://mongodb:27017/decks", {useNewUrlParser: true});
+mongoose.connect("mongodb://mongodb:27017/decks", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(logger())
 app.use(cors());
