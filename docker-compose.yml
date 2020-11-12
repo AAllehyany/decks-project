@@ -30,10 +30,12 @@ services:
       - decks-backend
     ports: 
       - 80:80
+      - 443:443
     volumes: 
       - ./nginx-conf:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+      - ./dhparam:/etc/ssl/certs
     networks:
       - decks-network
     command: [nginx, '-g', 'daemon off;']
@@ -46,7 +48,7 @@ services:
       - ./data/certbot/www:/var/www/certbot
     depends_on:
       - proxy-service
-    command: certonly --webroot --webroot-path=/var/www/certbot --email aallehyany@gmail.com --agree-tos --no-eff-email --staging -d decks-builder.com
+    command: certonly --webroot --webroot-path=/var/www/certbot --email aallehyany@gmail.com --agree-tos --no-eff-email --force-renewal -d decks-builder.com
 
     
 volumes:
