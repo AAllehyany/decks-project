@@ -20,11 +20,11 @@ router.post('/save', async ctx => {
     await createDeckSchema.validateAsync(deck);
 
     const deckList = await fetchCards(deck.cards);
-    const valid = deckList.every((c: any) => c.game.toUpperCase() === deck.game.toUpperCase());
-    //const valid = validateWithRule(deckList as WeissCard[], weissRules);
+    //const valid = deckList.every((c: any) => c.game.toUpperCase() === deck.game.toUpperCase());
+    const valid = validateWithRule(deckList as WeissCard[], weissRules);
 
     if(!valid) {
-        ctx.throw(400, 'The deck is not constructed of cards from the same card game.');
+        ctx.throw(400, 'The deck does not follow deck construction rules.');
     }
 
     const code = await generateUniqueCode();

@@ -9,24 +9,26 @@ import Koa from 'koa';
 import Router from '@koa/router';
 import cors from '@koa/cors';
 import bodyparser from 'koa-bodyparser';
-import json from 'koa-json';
 import cardRoutes from './routes/cards.route';
 import tokenRoutes from './routes/token.routes';
 import deckRoutes from './routes/decks.route';
+import gameRoutes from './routes/games.route';
+import titleRoutes from './routes/expansions.route';
+
 import {ValidationError} from 'joi';
 import mongoose from 'mongoose';
 import adminRoute from './routes/admin.route';
 import logger from 'koa-logger';
 
 const app = new Koa();
-const weissCardRoutes = cardRoutes();
+const cardRoute = cardRoutes();
 const tokenRoute = tokenRoutes();
 
-mongoose.connect("mongodb://mongodb:27017/decks", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/decks", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(logger())
 app.use(cors());
-app.use(json());
+//app.use(json());
 app.use(bodyparser());
 
 app.use(async (ctx, next) => {
@@ -69,9 +71,11 @@ app.on('error', (err, ctx) => {
 });
 
 
-app.use(weissCardRoutes.routes()).use(weissCardRoutes.allowedMethods());
+app.use(cardRoute.routes()).use(cardRoute.allowedMethods());
 app.use(tokenRoute.routes()).use(tokenRoute.allowedMethods());
 app.use(deckRoutes.routes()).use(deckRoutes.allowedMethods());
+app.use(gameRoutes.routes()).use(gameRoutes.allowedMethods());
+app.use(titleRoutes.routes()).use(titleRoutes.allowedMethods());
 app.use(adminRoute.routes()).use(adminRoute.allowedMethods());
 app.listen(3000, () => {
     console.log("Running.....");

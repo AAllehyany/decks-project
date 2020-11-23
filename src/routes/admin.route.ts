@@ -8,6 +8,8 @@ import {ICreateGameInput, createGameSchema} from '../schemas/game_schema';
 import {createGame} from '../services/game.service';
 import { createExpansionSchema, ICreateExpansionInput } from '../schemas/expansion_schema';
 import { createExpansion } from '../services/expansion.service';
+import {ICreateSearchSchemaInput} from '../schemas/search-schema';
+import { createSearchForm } from '../services/search-form.service';
 
 const router = new Router({
     prefix: '/admin',
@@ -22,7 +24,7 @@ router.post('/card/create', async ctx => {
     const added = await addCardsMany(cards, '1');
     ctx.status = 200;
     ctx.body = {
-        added
+        message: "Cards have been created successfully",
     }
 });
 
@@ -32,7 +34,7 @@ router.post('/game/create', async ctx => {
     const added = await createGame(game);
     ctx.status = 200;
     ctx.body = {
-        added
+        message: "Game has been created successfully"
     }
 });
 
@@ -42,7 +44,17 @@ router.post('/title/create', async ctx => {
     const added = await createExpansion(title);
     ctx.status = 200;
     ctx.body = {
+        message: "Title has been created successfully"
+    }
+});
+
+router.post('/form/create', async ctx => {
+    const searchForm: ICreateSearchSchemaInput = ctx.request.body;
+    const added = await createSearchForm(searchForm);
+    ctx.status = 200;
+    ctx.body = {
         added
     }
-})
+});
+
 export default router;

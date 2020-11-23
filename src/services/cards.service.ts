@@ -14,7 +14,7 @@ export const addCardsMany = async ( cards: Array<any>, user_id: string) => {
 
 
 export interface SearchQuery {
-    [key: string]: number | string | SearchQuery
+    [key: string]: number | string | SearchQuery | string[]
 }
 
 interface QueryOptions {
@@ -72,6 +72,10 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
 
     if(searchQuery.max_power) {
         query["$and"].push({"power": {"$lte": searchQuery.max_power}})
+    }
+
+    if(searchQuery.title_code) {
+        query["$and"].push({title_code: {"$in": searchQuery.title_code.split(',')}})
     }
 
     const options = {} as QueryOptions;

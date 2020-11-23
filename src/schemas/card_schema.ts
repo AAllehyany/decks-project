@@ -38,6 +38,7 @@ export const cardSchema = new mongoose.Schema({
     grade: Number,
     clan: String,
     triggers: [String],
+    title_code: String,
 });
 
 export const Card = mongoose.model('Card', cardSchema);

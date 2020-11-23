@@ -13,7 +13,8 @@ export interface WeissCard {
     traits: string,
     set_code: string,
     game: string,
-    triggers: Array<string>
+    triggers: Array<string>,
+    title_code: string,
 }
 
 export const weissCardSchema = Joi.object({
@@ -28,7 +29,8 @@ export const weissCardSchema = Joi.object({
     traits: Joi.string().default('').allow(null, ''),
     set_code: Joi.string().default(''),
     game: Joi.string().required().valid('WS'),
-    triggers: Joi.array().items(Joi.string())
+    triggers: Joi.array().items(Joi.string()),
+    title_code: Joi.string().required()
 }).unknown(true);
 
 export const searchQuerySchema = Joi.object({
@@ -43,4 +45,5 @@ export const searchQuerySchema = Joi.object({
     min_power: Joi.number().min(-1),
     max_power: Joi.number().min(-1),
     text: Joi.string(),
+    title_code: Joi.string()
 });

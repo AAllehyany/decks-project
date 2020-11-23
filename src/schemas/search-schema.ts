@@ -1,3 +1,5 @@
+import {ISearch} from '../models/search.model';
+
 export interface SearchSchema {
     name?: string,
     card_type?: number,
@@ -12,5 +14,11 @@ export interface SearchSchema {
     level_limit?: number,
     game: string,
     skip?: number,
-    limit?: number
+    limit?: number,
+    title_code?: string,
+}
+
+export interface ICreateSearchSchemaInput {
+    game: ISearch['game']
+    fields: ISearch['fields']
 }
