@@ -3,25 +3,46 @@ import { SearchSchema } from '../schemas/search-schema';
 
 const esr = require('escape-string-regexp');
 
+/**
+ * Adds a single card to the db
+ * @param card the card to add to DB
+ * @param user_id user id of person/bot adding card
+ * @param title_id the expansion for the card, currently only used for Weiss.
+ */
 export const addCardService = async ( card: any, user_id: number, title_id: number) => {
     const newCard = new Card(card);
     return newCard.save();
 }
 
+/**
+ * To add multiple cards to database
+ * @param cards Array of cards
+ * @param user_id user who added cards
+ */
 export const addCardsMany = async ( cards: Array<any>, user_id: string) => {
     Card.insertMany(cards);
 }
 
-
+/**
+ * Represents the search query received by user.
+ * It is essentially a map of string to multiple types
+ */
 export interface SearchQuery {
     [key: string]: number | string | SearchQuery | string[]
 }
 
+/**
+ * QueryOptions for pagination purposes.
+ */
 interface QueryOptions {
     limit: number
     skip: number
 }
 
+/**
+ * Filters cards based on given filters, limits default to 50.
+ * @param searchQuery Filters for searching cards
+ */
 export const searchCardsService = async ( searchQuery: SearchSchema) => {
     const query = {
         "$and": [] as Array<SearchQuery>
@@ -78,17 +99,28 @@ export const searchCardsService = async ( searchQuery: SearchSchema) => {
         query["$and"].push({title_code: {"$in": searchQuery.title_code.split(',')}})
     }
 
+    if(searchQuery.trigger) {
+        query["$and"].push({triggers: searchQuery.trigger})
+    }
+
     const options = {} as QueryOptions;
 
     if(searchQuery.skip) {
         options.skip = perPage * Number(searchQuery.skip);
     }
 
+    
+
     options.limit = 50;
 
     return Card.find(query["$and"].length > 0 ? query : {}).skip(options.skip).limit(options.limit).exec();
 };
 
+/**
+ * Gets all cards with IDs in the array. Used to check validity of 
+ * cards to be added to a deck.
+ * @param cardIds ids of cards to fetch from DB
+ */
 export const fetchCards = async (cardIds: Array<string>) => {
     const list = [] as any;
 
