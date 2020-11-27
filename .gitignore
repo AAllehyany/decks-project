@@ -73,9 +73,9 @@ proxy/
 .env.test
 
 #firebase config
-# firebase-config.js
-# firebase-config.ts
-# serviceAccountKey.json
+firebase-config.js
+firebase-config.ts
+serviceAccountKey.json
 
 *.js
 
