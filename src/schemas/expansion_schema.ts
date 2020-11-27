@@ -1,6 +1,9 @@
 import {IExpansion} from '../models/expansion.model'
 import Joi from 'joi';
 
+/**
+ * Schema to create new expansion
+ */
 export interface ICreateExpansionInput {
     name: IExpansion['name'],
     title_codes: IExpansion['title_codes']

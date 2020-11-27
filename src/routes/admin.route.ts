@@ -11,12 +11,20 @@ import { createExpansion } from '../services/expansion.service';
 import {ICreateSearchSchemaInput} from '../schemas/search-schema';
 import { createSearchForm } from '../services/search-form.service';
 
+/**
+ * Koa router for admin related routes.
+ * All routes are protected by Auth middleware.
+ */
 const router = new Router({
     prefix: '/admin',
 });
 
 router.use(firebaseAuth);
 
+/**
+ * Route to create multiple cards and add them to the database.
+ * 
+ */
 router.post('/card/create', async ctx => {
     const cards = ctx.request.body;
     const cardList = Joi.array().items(weissCardSchema);
@@ -28,6 +36,9 @@ router.post('/card/create', async ctx => {
     }
 });
 
+/**
+ * Route to create a single game.
+ */
 router.post('/game/create', async ctx => {
     const game: ICreateGameInput = ctx.request.body;
     await createGameSchema.validateAsync(game);
@@ -38,6 +49,9 @@ router.post('/game/create', async ctx => {
     }
 });
 
+/**
+ * Route to create title.
+ */
 router.post('/title/create', async ctx => {
     const title: ICreateExpansionInput = ctx.request.body;
     await createExpansionSchema.validateAsync(title);
@@ -48,13 +62,13 @@ router.post('/title/create', async ctx => {
     }
 });
 
-router.post('/form/create', async ctx => {
-    const searchForm: ICreateSearchSchemaInput = ctx.request.body;
-    const added = await createSearchForm(searchForm);
-    ctx.status = 200;
-    ctx.body = {
-        added
-    }
-});
+// router.post('/form/create', async ctx => {
+//     const searchForm: ICreateSearchSchemaInput = ctx.request.body;
+//     const added = await createSearchForm(searchForm);
+//     ctx.status = 200;
+//     ctx.body = {
+//         added
+//     }
+// });
 
 export default router;

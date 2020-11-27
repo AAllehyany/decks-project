@@ -6,7 +6,6 @@ dotenv.config({
 });
 
 import Koa from 'koa';
-import Router from '@koa/router';
 import cors from '@koa/cors';
 import bodyparser from 'koa-bodyparser';
 import cardRoutes from './routes/cards.route';
@@ -20,6 +19,7 @@ import mongoose from 'mongoose';
 import adminRoute from './routes/admin.route';
 import logger from 'koa-logger';
 
+// App set up
 const app = new Koa();
 const cardRoute = cardRoutes();
 const tokenRoute = tokenRoutes();
@@ -28,9 +28,11 @@ mongoose.connect("mongodb://localhost:27017/decks", {useNewUrlParser: true, useU
 
 app.use(logger())
 app.use(cors());
-//app.use(json());
 app.use(bodyparser());
 
+/**
+ * Catch-all error middleware. Displays the appropriate error message given the error.
+ */
 app.use(async (ctx, next) => {
     try {
       await next();
@@ -70,13 +72,15 @@ app.on('error', (err, ctx) => {
     console.log(err);
 });
 
-
+// Routes
 app.use(cardRoute.routes()).use(cardRoute.allowedMethods());
 app.use(tokenRoute.routes()).use(tokenRoute.allowedMethods());
 app.use(deckRoutes.routes()).use(deckRoutes.allowedMethods());
 app.use(gameRoutes.routes()).use(gameRoutes.allowedMethods());
 app.use(titleRoutes.routes()).use(titleRoutes.allowedMethods());
 app.use(adminRoute.routes()).use(adminRoute.allowedMethods());
-app.listen(3000, () => {
+
+const PORT = 3030;
+app.listen(process.env.PORT || PORT, () => {
     console.log("Running.....");
 })

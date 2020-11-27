@@ -2,6 +2,11 @@
 import admin from '../firebase-setup';
 import {ParameterizedContext, DefaultContext, DefaultState, Next} from 'koa';
 
+/**
+ * Middleware to validate user is logged in. Used to authenticate admin API requests.
+ * @param ctx 
+ * @param next 
+ */
 const middleWare = async (ctx: ParameterizedContext<DefaultState, DefaultContext>, next: Next) =>{
 
     const auth = ctx.req.headers.authorization;

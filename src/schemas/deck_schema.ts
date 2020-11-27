@@ -1,13 +1,18 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
 
+/**
+ * Validation object for inserting deck to the database
+ */
 export const createDeckSchema = Joi.object({
     name: Joi.string().required(),
     game: Joi.string().required().valid('WS', 'FoW', 'YGO', 'VG'),
-    //code: Joi.string().required(),
     cards: Joi.array().required(),
 });
 
+/**
+ * Model for creating a new deck.
+ */
 export interface ICreateDeckInput {
     name: string,
     game: string,
@@ -15,6 +20,9 @@ export interface ICreateDeckInput {
     code?: string
 }
 
+/**
+ * Represents a deck in the database
+ */
 export const deckSchema = new mongoose.Schema({
     name: {
         type: String,

@@ -1,6 +1,9 @@
 import Joi from 'joi';
 
 
+/**
+ * Represents a WeissCard entry to the database.
+ */
 export interface WeissCard {
     name: string,
     card_type: number,
@@ -17,6 +20,9 @@ export interface WeissCard {
     title_code: string,
 }
 
+/**
+ * Validations for inserting weiss card to DB.
+ */
 export const weissCardSchema = Joi.object({
     name: Joi.string().required(),
     card_type: Joi.number().min(0).max(2).required(),

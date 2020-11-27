@@ -8,10 +8,17 @@ import {weissRules, validateWithRule} from '../services/deck-validation.service'
 import Router from '@koa/router';
 import { WeissCard } from '../schemas/weiss-card.schema';
 
+/**
+ * Route providing deck related routes.
+ */
 const router = new Router({
     prefix: '/decks'
 });
 
+/**
+ * Saves and creates a new deck with the given cards.
+ * Checks for deck's validity before insertion, fails if the deck does not adhere to the rules.
+ */
 router.post('/save', async ctx => {
 
     const deck: ICreateDeckInput = ctx.request.body;
@@ -36,7 +43,9 @@ router.post('/save', async ctx => {
     };
 });
 
-
+/**
+ * Route to view a single deck with the provided code.
+ */
 router.get('/view/:code', async ctx => {
     const code = ctx.params.code;
     const deck = await deckService.findListByCode(code);

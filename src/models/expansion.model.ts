@@ -1,5 +1,7 @@
 import mongoose, {Schema, Document} from 'mongoose';
-
+/**
+ * Expansion schema for the Database. Represents a title in the game.
+ */
 export interface IExpansion extends Document {
     name: string,
     title_codes: Array<string>,

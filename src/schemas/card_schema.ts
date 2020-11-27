@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+/**
+ * Generic schema for cards in the database.
+ * Allows for flexible cards.
+ */
 export const cardSchema = new mongoose.Schema({
     game: {
         type: String,
