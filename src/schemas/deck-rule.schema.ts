@@ -24,3 +24,18 @@ export interface DeckRule {
     targetField: TargetField,
     rule: Rule
 }
+
+export interface DeckBuildRule {
+    field: string
+    value: string | number
+    min: number
+    max: number
+    group: boolean
+    check: RuleTypes
+}
+
+export enum RuleTypes {
+    MAX_COPIES,
+    DECK_SIZE
+
+}
