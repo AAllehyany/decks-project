@@ -1,4 +1,4 @@
-import { DeckRule } from '../schemas/deck-rule.schema';
+import { DeckRule, DeckBuildRule, RuleTypes } from '../schemas/deck-rule.schema';
 import {WeissCard} from '../schemas/weiss-card.schema';
 
 
@@ -7,6 +7,38 @@ export const weissRules: Array<DeckRule> = [
     {targetField: {field: "card_type", value: 2}, rule: {max: 8, min: 0}},
     {targetField: {field: "deck", value: 'length'}, rule: {max: 50, min: 50}}
 ];
+
+export const weissDeckRules: Array<DeckBuildRule> = [
+    {field: "name", value: "", min: 0, max: 4, group: false, check: RuleTypes.MAX_COPIES},
+    {field: "deck", value: "", min: 50, max: 50, group: false, check: RuleTypes.DECK_SIZE},
+    {field: "card_type", value: 2, min: 0, max: 8, group: false, check: RuleTypes.DECK_SIZE},
+]
+
+
+export const validateRule = (list: Array<any>, rules: [DeckBuildRule]): Boolean =>{
+    for(const rule of rules) {
+      if(rule.check === RuleTypes.MAX_COPIES) {
+        const grouped = {} as any;
+        for(const card of list) {
+            if(grouped[card[rule.field]] === undefined) {
+                grouped[card[rule.field]] = 0;
+            }
+    
+            grouped[card[rule.field]] += 1;
+    
+            if(grouped[card[rule.field]] > rule.max || grouped[card[rule.field]] < rule.min) {
+                return false
+            }
+        }
+      } else if(rule.check === RuleTypes.DECK_SIZE) {
+        if(list.length > rule.max || list.length < rule.min) return false;
+      } else {
+        const filtered = list.reduce((p, c) => c[rule.field] === rule.value ? (p + 1) : p, 0);
+        if(filtered > rule.max || filtered < rule.min) return false;
+      }
+    }
+    return true;
+}
 
 export const validateWithRule = (deckList: Array<any>, rules: Array<DeckRule>): Boolean => {
 
